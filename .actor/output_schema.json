@@ -1,19 +1,19 @@
 {
     "actorOutputSchemaVersion": 1,
     "title": "Deribit Crypto Options Greeks, Candlesticks & Volume Output",
-    "description": "Comprehensive report of Deribit crypto assets including live index prices, TradingView OHLCV candlesticks, strike-by-strike primary and higher-order Greeks tables, and Open Interest & Volume distributions.",
     "properties": {
         "results": {
             "type": "string",
-            "title": "Default Dataset Results",
-            "description": "Dataset records generated during the run",
+            "title": "Dataset Items",
+            "description": "Dataset items and records produced by the Actor",
             "template": "{{links.apiDefaultDatasetUrl}}/items"
         },
         "overview": {
             "type": "string",
-            "title": "Summary Output",
-            "description": "Summary payload stored in Key-Value store",
+            "title": "Summary Payload",
+            "description": "Summary report stored in Key-Value store",
             "template": "{{links.apiDefaultKeyValueStoreUrl}}/records/OUTPUT"
         }
-    }
+    },
+    "description": "Comprehensive report of Deribit crypto assets including live index prices, TradingView OHLCV candlesticks, strike-by-strike primary and higher-order Greeks tables, and Open Interest & Volume distributions."
 }

@@ -1,0 +1,14 @@
+{
+    "actorSpecification": 1,
+    "name": "deribit-options-greeks-intelligence-actor",
+    "title": "Deribit Crypto Options Greeks, Candlesticks & OI/Volume Tables",
+    "description": "Direct official Deribit API data engine: Complete strike-by-strike Greeks tables (Delta, Gamma, Vega, Theta, Vanna, Charm, Speed, Vomma, Color), Open Interest & Volume distributions, and TradingView OHLCV candlesticks across BTC, ETH, SOL, XRP, AVAX, MATIC, and PAXG.",
+    "version": "1.0",
+    "meta": {
+        "templateId": "python-start"
+    },
+    "dockerfile": "../Dockerfile",
+    "input": "./input_schema.json",
+    "dataset": "./dataset_schema.json",
+    "output": "./output_schema.json"
+}

@@ -1,0 +1,60 @@
+{
+    "title": "Deribit Options Greeks & Candlesticks Input Schema",
+    "type": "object",
+    "schemaVersion": 1,
+    "properties": {
+        "currencies": {
+            "title": "Crypto Currencies",
+            "type": "array",
+            "description": "List of cryptocurrencies to fetch from Deribit (e.g., BTC, ETH, SOL, XRP, AVAX, MATIC, PAXG).",
+            "default": ["BTC", "ETH", "SOL"],
+            "items": {
+                "type": "string"
+            },
+            "editor": "stringList"
+        },
+        "candlestickResolution": {
+            "title": "Candlestick Resolution (TradingView OHLCV)",
+            "type": "string",
+            "description": "Candlestick bar interval from Deribit perpetual contract.",
+            "default": "1D",
+            "enum": ["1", "5", "15", "60", "1D"],
+            "editor": "select"
+        },
+        "candlestickDays": {
+            "title": "Candlestick History (Days)",
+            "type": "integer",
+            "description": "Number of days of historical OHLCV candlestick data to fetch.",
+            "default": 30,
+            "minimum": 1,
+            "maximum": 365
+        },
+        "maxExpirationsPerCurrency": {
+            "title": "Max Expirations Per Currency",
+            "type": "integer",
+            "description": "Maximum number of upcoming option expiration cycles to process per currency.",
+            "default": 4,
+            "minimum": 1,
+            "maximum": 20
+        },
+        "includeCandlesticks": {
+            "title": "Include Candlestick Table",
+            "type": "boolean",
+            "description": "Whether to fetch and output the OHLCV candlestick price action dataset.",
+            "default": true
+        },
+        "includeOiVolumeTable": {
+            "title": "Include OI & Volume Table",
+            "type": "boolean",
+            "description": "Whether to output the strike-level Open Interest and Volume table.",
+            "default": true
+        },
+        "includeFullGreeksTable": {
+            "title": "Include Full Greeks Table",
+            "type": "boolean",
+            "description": "Whether to output the full primary and higher-order Greeks dataset.",
+            "default": true
+        }
+    },
+    "required": ["currencies"]
+}

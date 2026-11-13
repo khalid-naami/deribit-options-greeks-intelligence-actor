@@ -126,7 +126,8 @@ class DeribitClient:
                 volumes = result.get('volume', [])
                 ticks = result.get('ticks', [])
 
-                for i in range(len(ticks)):
+                n_bars = min(len(ticks), len(opens), len(highs), len(lows), len(closes), len(volumes))
+                for i in range(n_bars):
                     dt = datetime.fromtimestamp(ticks[i] / 1000.0, tz=timezone.utc)
                     candles.append({
                         "datetime": dt.strftime("%Y-%m-%d %H:%M:%S"),

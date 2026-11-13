@@ -1,0 +1,15 @@
+{
+    "actorKeyValueStoreSchemaVersion": 1,
+    "title": "Deribit Options Greeks Key-Value Store",
+    "description": "Summary report for Deribit Crypto Options Greeks, Candlesticks & OI/Volume Tables.",
+    "collections": {
+        "output": {
+            "title": "Deribit Options Summary",
+            "description": "Comprehensive report of live index prices, TradingView OHLCV candlesticks, and strike-level Greeks/OI chains.",
+            "key": "OUTPUT",
+            "contentTypes": [
+                "application/json"
+            ]
+        }
+    }
+}

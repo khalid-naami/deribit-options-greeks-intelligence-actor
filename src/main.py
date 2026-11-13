@@ -2,6 +2,7 @@
 
 import asyncio
 import logging
+import math
 import sys
 from datetime import datetime, timezone
 from typing import Dict, Any, List
@@ -36,6 +37,8 @@ async def main() -> None:
         candlestick_days = int(actor_input.get("candlestickDays", 30))
         max_expirations = int(actor_input.get("maxExpirationsPerCurrency", 4))
         include_candles = bool(actor_input.get("includeCandlesticks", True))
+        include_oi_volume = bool(actor_input.get("includeOiVolumeTable", True))
+        include_full_greeks = bool(actor_input.get("includeFullGreeksTable", True))
 
         logger.info("Starting Deribit Crypto Options Greeks & Candlesticks Actor...")
         logger.info(f"Target Currencies: {currencies_list}, Resolution: {resolution}, Max Expirations: {max_expirations}")
@@ -62,7 +65,9 @@ async def main() -> None:
             # 2. Options Chains & Greeks
             processed_data = engine.process_currency_options(
                 currency=currency,
-                max_expirations=max_expirations
+                max_expirations=max_expirations,
+                include_oi_volume=include_oi_volume,
+                include_full_greeks=include_full_greeks
             )
 
             all_records = processed_data.pop("allRecords", [])
@@ -79,8 +84,12 @@ async def main() -> None:
 
         # Push to Apify Default Dataset
         if dataset_records:
-            logger.info(f"Pushing {len(dataset_records)} strike options records to Apify dataset...")
-            await Actor.push_data(dataset_records)
+            sanitized_records = [
+                {k: v for k, v in rec.items() if v is not None and not (isinstance(v, float) and not math.isfinite(v))}
+                for rec in dataset_records
+            ]
+            logger.info(f"Pushing {len(sanitized_records)} strike options records to Apify dataset...")
+            await Actor.push_data(sanitized_records)
 
         # Save comprehensive summary to Key-Value Store (OUTPUT)
         output_payload = {
@@ -91,6 +100,9 @@ async def main() -> None:
             "results": all_results
         }
         await Actor.set_value("OUTPUT", output_payload)
+        if not dataset_records:
+            await Actor.fail(status_message="No Deribit option strike records were extracted.")
+            return
 
         logger.info(
             f"Actor completed successfully! Processed {len(all_results)} crypto assets "
